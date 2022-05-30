@@ -1,0 +1,129 @@
+.section-wrapper {
+    height: 360px;
+
+    .section-container {
+        padding: 20px 160px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            height: 36px;
+            align-items: center;
+
+            .section-title {
+                font-size: 20px;
+                font-weight: 600;
+            }
+
+            .section-btn {
+                border: none;
+                padding: 10px 15px;
+                color: #282e41;
+                text-transform: uppercase;
+                background-color: #ebebeb;
+                font-size: 12px;
+                margin-right: 12px;
+
+                &:hover {
+                    background-color: #f7d800;
+                }
+            }
+        }
+
+
+        .section-slider {
+            padding-top: 20px;
+
+            .section-block {
+                margin: 0;
+                width: 278px !important;
+
+                .section-img {
+                    width: 278px;
+                    height: 196px;
+                    object-fit: cover;
+                }
+
+                .section-img-title {
+                    margin: 0;
+                    font-size: 14px;
+                    font-weight: 300;
+                    color: #111;
+                    line-height: 30px;
+                    padding: 5px 0;
+
+                    &:hover {
+                        color: #89d9e2;
+                    }
+                }
+            }
+
+
+        }
+    }
+
+
+
+
+
+}
+
+.section-content {
+    height: inherit;
+}
+
+
+
+.slick-arrow.slick-prev {
+    left: -20px;
+
+    &:hover {
+        background-color: #eceaea;
+    }
+
+
+}
+
+.slick-arrow.slick-next {
+    right: -20px;
+
+
+    &:hover {
+        background-color: #eceaea;
+    }
+}
+
+.slick-arrow.slick-prev,
+.slick-arrow.slick-next {
+    top: 50%;
+    z-index: 1;
+    height: 48px;
+    width: 44px;
+    color: #fff;
+    background-color: #fff;
+    border: 2px solid #d7d7d7;
+}
+
+.slick-arrow.slick-disabled {
+    display: none !important;
+}
+
+.slick-arrow.slick-prev:focus,
+.slick-arrow.slick-next:focus {
+    background-color: #eceaea;
+
+}
+
+.slick-prev::before {
+    color: red !important;
+    font-family: FontAwesome !important;
+}
+
+.slick-next::before {
+    color: red !important;
+    font-family: FontAwesome !important;
+}

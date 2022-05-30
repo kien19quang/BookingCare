@@ -1,0 +1,98 @@
+{
+    "home-header": {
+        "speciality": "Medical speciality",
+        "search-doctor": "Find a doctor by speciality",
+        "health-facility": "Health facilities",
+        "select-room": "Choose hospital clinic",
+        "doctor": "Doctor",
+        "select-doctor": "Choose a good doctor",
+        "package": "Examination package",
+        "check-health": "General health check",
+        "Support": "Support",
+        "Welcome": "Welcome, "
+    },
+    "homepage": {
+        "outstanding-doctor": "Famous doctor through the week",
+        "more-infor": "More Infor"
+    },
+    "banner": {
+        "title-1": "MEDICAL PLATFORM",
+        "title-2": "COMPREHENSIVE HEALTH CARE",
+        "child-1": "Specialized examination",
+        "child-2": "Remote examination",
+        "child-3": "General examination",
+        "child-4": "Medical test",
+        "child-5": "Mental health",
+        "child-6": "Dental examination"
+    },
+    "menu": {
+        "admin": {
+            "manage-user": "User management",
+            "manage-doctor": "Manage Doctors",
+            "manage-admin": "Manage Admins",
+            "crud": "CRUD User",
+            "crud-redux": "CRUD Redux",
+            "clinic": "Clinics",
+            "manage-clinic": "Manage Clinics",
+            "specialty": "Specialty",
+            "manage-specialty": "Manage Sepecialty",
+            "handbook": "Handbook",
+            "manage-handbook": "Manage Handbook"
+        },
+        "doctor": {
+            "manage-schedule": "Manage Doctor's schedule"
+        }
+    },
+    "manage-user": {
+        "add": "Add a new user",
+        "email": "Email",
+        "password": "Password",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "phoneNumber": "Phone Number",
+        "address": "Address",
+        "gender": "Gender",
+        "position": "Position",
+        "role": "Role",
+        "image": "Avatar",
+        "upload": "Upload Image",
+        "save": "Save user",
+        "edit": "Edit user"
+    },
+    "manage-schedule": {
+        "title": "Manage doctor's examination plan",
+        "choose-doctor": "Choose a doctor",
+        "choose-date": "Choose date",
+        "save": "Save Infor"
+    },
+    "admin": {
+        "manage-doctor": {
+            "title": "Create more doctor information",
+            "select-doctor": "Choose a doctor",
+            "intro": "Introduction information",
+            "add": "Create information",
+            "save": "Save information",
+            "price": "Price",
+            "payment": "Payment",
+            "province": "Province",
+            "nameClinic": "Clinic's name",
+            "addressClinic": "Clinic's address",
+            "note": "Note"
+        }
+    },
+    "patient": {
+        "detail-doctor": {
+            "schedule": "Schedule",
+            "no-schedule": "The doctor does not have an appointment during this time, please choose another date!",
+            "choose": "Choose ",
+            "book-free": " and book (free)"
+        },
+        "extra-infor-doctor": {
+            "text-address": "Address of exemination",
+            "price": "Examination price: ",
+            "detail": "See details",
+            "payment": "The patient can pay the cost in the form of:  ",
+            "hide-price": "Hide price list"
+        }
+    }
+}

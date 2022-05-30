@@ -1,0 +1,71 @@
+@import "../../styles/common.scss";
+
+.header-container {
+    z-index: 99;
+    display: flex;
+    justify-content: space-between;
+    background-color: $colormain;
+    color: $common-text-color;
+    height: 40px;
+    position: relative;
+}
+
+.btn-logout {
+    color: $common-text-color;
+    line-height: 40px;
+    height: 40px;
+    padding: 0 10px;
+
+    &:hover {
+        background-color: darken($colormain, 5);
+    }
+
+    i {
+        font-size: $base-size + 1px;
+    }
+}
+
+.content-right {
+    display: flex;
+    align-items: center;
+
+
+    .welcome {
+        margin-right: 20px;
+    }
+
+    .languages {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+
+        .language-vi {
+            margin-right: 16px;
+            cursor: pointer;
+            opacity: 0.5;
+
+            &:hover {
+                opacity: 1;
+            }
+
+            &.active {
+                opacity: 1;
+                color: orange;
+            }
+        }
+
+        .language-en {
+            cursor: pointer;
+            opacity: 0.5;
+
+            &:hover {
+                opacity: 1;
+            }
+
+            &.active {
+                opacity: 1;
+                color: rgb(23, 237, 23);
+            }
+        }
+    }
+}

@@ -1,0 +1,30 @@
+.section-outstanding-doctor {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.section-img.doctor-img {
+    border-radius: 50%;
+    width: 120px !important;
+    height: 120px !important;
+}
+
+.doctor-block {
+    height: 223px;
+    height: 266px;
+    padding: 10px 5px;
+    border: 1px solid #eee;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .doctor-title {
+        text-align: center;
+    }
+
+    .doctor-sub-title {
+        font-size: 14px;
+        color: #555;
+    }
+}

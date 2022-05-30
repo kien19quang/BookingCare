@@ -1,0 +1,30 @@
+.row {
+    div {
+        margin-top: 16px;
+    }
+}
+
+.img-block {
+    margin-top: 0 !important;
+
+    .label-upload {
+        padding: 6px;
+        border-radius: 4px;
+        background-color: #ddd;
+        cursor: pointer;
+        opacity: 1;
+
+        &:hover {
+            opacity: 0.85;
+        }
+    }
+
+    .preview-image {
+        height: 80px;
+        width: 100%;
+        border: 1px solid #ddd;
+        background: center center no-repeat;
+        background-size: contain;
+        cursor: pointer;
+    }
+}
