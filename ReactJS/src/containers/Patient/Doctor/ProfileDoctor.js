@@ -5,7 +5,8 @@ import { LANGUAGES } from "../../../utils"
 import { FormattedMessage } from 'react-intl'
 import { getProfileDoctorById } from '../../../services/userService'
 import NumberFormat from 'react-number-format'
-
+import _ from 'lodash';
+import moment from 'moment';
 
 
 class ProfileDoctor extends Component {
@@ -44,16 +45,41 @@ class ProfileDoctor extends Component {
         return result;
     }
 
+    renderTimeBooking = (dataTime) => {
+        let { language } = this.props
+        if (dataTime && !_.isEmpty(dataTime)) {
+            let time = language === LANGUAGES.VI ? dataTime.timeTypeData.valueVi : dataTime.timeTypeData.valueEn;
+
+            let date = language === LANGUAGES.VI ?
+                moment(dataTime.date, 'DD/MM/YYYY').format('dddd - DD/MM/YYYY') :
+                moment(dataTime.date, 'DD/MM/YYYY').locale('en').format('ddd - MM/DD/YYYY');
+            date = this.capitalizeFirstLetter(date);
+            return (
+                <>
+                    <div>{time} - {date}</div>
+                    <div>
+                        <FormattedMessage id="patient.booking-modal.priceBooking" />
+                    </div>
+                </>
+            )
+        }
+        return <></>
+    }
+
+    capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
     render() {
         let { dataProfile } = this.state;
-        let { language } = this.props;
+        let { language, isShowDescriptionDoctor, dataTime } = this.props;
         let nameVi = "";
         let nameEn = "";
         if (dataProfile && dataProfile.positionData) {
             nameVi = `${dataProfile.positionData.valueVi}, ${dataProfile.lastName} ${dataProfile.firstName}`
             nameEn = `${dataProfile.positionData.valueEn}, ${dataProfile.firstName} ${dataProfile.lastName}`
         }
-        console.log("check dataProfile : ", dataProfile);
+        console.log(dataTime)
         return (
             <>
                 <div className="profile-doctor-container">
@@ -68,11 +94,20 @@ class ProfileDoctor extends Component {
                             </div>
 
                             <div className="content-right-down">
-                                {dataProfile && dataProfile.Markdown && dataProfile.Markdown.description &&
-                                    <span>
-                                        {dataProfile.Markdown.description}
-                                    </span>
+                                {isShowDescriptionDoctor === true ?
+                                    <>
+                                        {dataProfile && dataProfile.Markdown && dataProfile.Markdown.description &&
+                                            <span>
+                                                {dataProfile.Markdown.description}
+                                            </span>
+                                        }
+                                    </>
+                                    :
+                                    <>
+                                        {this.renderTimeBooking(dataTime)}
+                                    </>
                                 }
+
                             </div>
                         </div>
 

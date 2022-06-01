@@ -204,7 +204,6 @@ const blukCreateScheduleService = (data) => {
                         return item;
                     })
                 }
-                console.log(schedule);
                 let existing = await db.Schedule.findAll({
                     where: { doctorID: data.doctorID, date: data.date },
                     attributes: ['timeType', 'date', 'doctorID', 'maxNumber'],
@@ -253,6 +252,11 @@ const getScheduleByDateService = (doctorId, date) => {
                             as: 'timeTypeData',
                             attributes: ['valueEn', 'valueVi']
                         },
+                        {
+                            model: db.User,
+                            as: 'doctorData',
+                            attributes: ['firstName', 'lastName']
+                        }
                     ],
                     raw: false,
                     nest: true,

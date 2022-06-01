@@ -137,14 +137,6 @@ class ManageDoctor extends Component {
             note: this.state.note,
         })
 
-        this.setState({
-            selectedPrice: '',
-            selectedPayment: '',
-            selectedProvince: '',
-            nameClinic: '',
-            addressClinic: '',
-            note: '',
-        })
     }
 
 
