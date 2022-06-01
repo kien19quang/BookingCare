@@ -1,13 +1,18 @@
 import db from "../models/index";
-import _, { reject } from 'lodash'
+import _ from 'lodash'
 require('dotenv').config();
 import emailService from './emailService'
+import { v4 as uuidv4 } from 'uuid'
 
+let buildUrlEmail = (doctorId, token) => {
+    let result = `${process.env.URL_REACT}/verify-booking?token=${token}&doctorId=${doctorId}`
+
+    return result
+}
 
 const postBookAppointment = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log(data);
             if (!data.email ||
                 !data.doctorID ||
                 !data.timeType ||
@@ -20,13 +25,14 @@ const postBookAppointment = (data) => {
             }
 
             else {
+                let token = uuidv4();
                 await emailService.sendSimpleEmail({
                     receiverEmail: data.email,
                     patientName: data.fullName,
                     time: data.timeString,
                     doctorName: data.doctorName,
                     language: data.language,
-                    redirectLink: "https://www.facebook.com/kien19quang"
+                    redirectLink: buildUrlEmail(data.doctorID, token)
                 });
 
                 let user = await db.User.findOrCreate({
@@ -36,13 +42,17 @@ const postBookAppointment = (data) => {
                         roleid: 'R3'
                     }
                 })
-                if (user && user[0] && user[1] === true) {
-                    res = await db.Booking.create({
-                        statusId: "S1",
-                        doctorId: data.doctorID,
-                        patientId: user[0].id,
-                        date: data.date,
-                        timeType: data.timeType,
+                if (user && user[0]) {
+                    await db.Booking.findOrCreate({
+                        where: { patientId: user[0].id },
+                        defaults: {
+                            statusId: "S1",
+                            doctorId: data.doctorID,
+                            patientId: user[0].id,
+                            date: data.date,
+                            timeType: data.timeType,
+                            token: token
+                        }
                     })
                 }
 
@@ -59,6 +69,48 @@ const postBookAppointment = (data) => {
     })
 }
 
+const postVerifyBookAppointment = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.doctorId || !data.token) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing parameter'
+                })
+            }
+            else {
+                let appointment = await db.Booking.findOne({
+                    where: {
+                        doctorId: data.doctorId,
+                        token: data.token,
+                        statusId: 'S1'
+                    },
+                    raw: false
+                })
+
+                if (appointment) {
+                    appointment.statusId = 'S2';
+                    await appointment.save();
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'Update the appointment success!'
+                    })
+                }
+                else {
+                    resolve({
+                        errCode: 2,
+                        errMessage: "Appointment has been activated or does not exist"
+                    })
+                }
+            }
+
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
-    postBookAppointment
+    postBookAppointment,
+    postVerifyBookAppointment
 }

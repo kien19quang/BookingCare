@@ -113,7 +113,6 @@ class ManageDoctor extends Component {
             contentMarkdown: text,
             contentHTML: html
         })
-        console.log(this.state);
     }
 
 

@@ -14,12 +14,14 @@ module.exports = (sequelize, DataTypes) => {
         }
     };
     Specialty.init({
-        description: DataTypes.TEXT,
-        image: DataTypes.STRING,
-        name: DataTypes.STRING
+        image: DataTypes.BLOB('long'),
+        name: DataTypes.STRING,
+        contentHTML: DataTypes.TEXT,
+        contentMarkdown: DataTypes.TEXT
     }, {
         sequelize,
         modelName: 'Specialty',
+        freezeTableName: true
     });
     return Specialty;
 };

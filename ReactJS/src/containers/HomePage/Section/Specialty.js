@@ -3,15 +3,28 @@ import { connect } from 'react-redux';
 import './Specialty.scss'
 import { FormattedMessage } from 'react-intl';
 import Slider from "react-slick";
-
-
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
-
-import pathImage from '../../../assets/images/Specialty/coxuongkhop'
+import { getAllSpecialty } from '../../../services/userService';
 
 
 class Specialty extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataSpecialty: []
+        }
+    }
+
+    async componentDidMount() {
+        let res = await getAllSpecialty();
+        if (res && res.errCode === 0) {
+            this.setState({
+                dataSpecialty: res.data ? res.data : []
+            })
+        }
+    }
 
 
 
@@ -24,56 +37,40 @@ class Specialty extends Component {
             slidesToScroll: 1
         }
 
+        let { dataSpecialty } = this.state;
+        console.log(dataSpecialty);
         return (
             <div className='section-wrapper section-specialty'>
                 <div className="section-container">
 
                     <div className="section-header">
                         <div className="section-title">
-                            Chuyên khoa phổ biến
+                            <FormattedMessage id="homepage.specialty-popular" />
                         </div>
 
-                        <button className="section-btn">Xem thêm</button>
+                        <button className="section-btn">
+                            <FormattedMessage id="homepage.more-infor" />
+                        </button>
                     </div>
 
                     <div className="section-slider">
                         <Slider {...settings}>
-                            <div className='section-block'>
-                                <img src={pathImage} alt="" className='section-img' />
-                                <h3 className='section-img-title'>Cơ xuong khớp</h3>
-                            </div>
-                            <div className='section-block'>
-                                <img src={pathImage} alt="" className='section-img' />
-                                <h3 className='section-img-title'>Cơ xuong khớp</h3>
-                            </div>
-                            <div className='section-block'>
-                                <img src={pathImage} alt="" className='section-img' />
-                                <h3 className='section-img-title'>Cơ xuong khớp</h3>
-                            </div>
-                            <div className='section-block'>
-                                <img src={pathImage} alt="" className='section-img' />
-                                <h3 className='section-img-title'>Cơ xuong khớp</h3>
-                            </div>
-                            <div className='section-block'>
-                                <img src={pathImage} alt="" className='section-img' />
-                                <h3 className='section-img-title'>Cơ xuong khớp</h3>
-                            </div>
-                            <div className='section-block'>
-                                <img src={pathImage} alt="" className='section-img' />
-                                <h3 className='section-img-title'>Cơ xuong khớp</h3>
-                            </div>
-                            <div className='section-block'>
-                                <img src={pathImage} alt="" className='section-img' />
-                                <h3 className='section-img-title'>Cơ xuong khớp</h3>
-                            </div>
-                            <div className='section-block'>
-                                <img src={pathImage} alt="" className='section-img' />
-                                <h3 className='section-img-title'>Cơ xuong khớp</h3>
-                            </div>
+                            {dataSpecialty && dataSpecialty.length > 0 &&
+                                dataSpecialty.map((item, index) => {
+                                    return (
+                                        <div className='section-block' key={index}>
+                                            <img src={item.image} alt={`Khoa ${item.name}`} className='section-img' />
+                                            <h3 className='section-img-title'>{item.name}</h3>
+                                        </div>
+                                    )
+                                })
+                            }
+
+
                         </Slider>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
         );
     }
 
