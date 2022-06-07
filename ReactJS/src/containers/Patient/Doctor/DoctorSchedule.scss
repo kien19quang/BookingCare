@@ -1,5 +1,4 @@
 .doctor-schedule-container {
-    border-right: 1px solid #ddd;
 
     .all-schedule {
         select {
@@ -38,6 +37,7 @@
             margin-top: 20px;
             display: flex;
             flex-wrap: wrap;
+            flex-direction: column;
 
             .time-content-calendar {
                 display: flex;
@@ -47,7 +47,8 @@
 
                 button {
                     padding: 10px 12px;
-                    width: 22%;
+                    min-width: 22%;
+                    max-height: 40px;
                     border: none;
                     outline: none;
                     background-color: #fff04b;

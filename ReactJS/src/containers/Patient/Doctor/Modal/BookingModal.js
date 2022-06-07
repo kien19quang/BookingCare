@@ -124,7 +124,7 @@ class BookingModal extends Component {
         })
 
         if (res && res.errCode === 0) {
-            toast.success('Booking a new appointment success!')
+            toast.success('Booking a new appointment success. Please confirm at your email!')
         }
         else {
             toast.error('Booking a new appointment error!')

@@ -15,8 +15,7 @@ class HomeHeader extends Component {
 
     returnToHome = () => {
         if (this.props.history) {
-            console.log("hello")
-            this.props.history.push(`/home`)
+            this.props.history.push('/home')
         }
     }
 
