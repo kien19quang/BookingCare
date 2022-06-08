@@ -41,7 +41,8 @@
             "manage-handbook": "Manage Handbook"
         },
         "doctor": {
-            "manage-schedule": "Manage Doctor's schedule"
+            "manage-schedule": "Manage Doctor's schedule",
+            "manage-patient": "Manage Doctor's patient"
         }
     },
     "manage-user": {
@@ -104,7 +105,7 @@
             "email": "Email",
             "address": "Address",
             "reason": "Reasons for medical examination",
-            "birthday": "Date of birth",
+            "date": "Appointment date",
             "gender": "Gender",
             "btnConfirm": "Confirm",
             "btnCancel": "Cancel",

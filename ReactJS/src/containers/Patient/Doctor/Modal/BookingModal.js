@@ -13,7 +13,7 @@ import { postPatientBookAppointment } from '../../../../services/userService';
 import { toast } from 'react-toastify';
 import { dateFormat } from '../../../../utils';
 import moment from 'moment';
-
+import LoadingOverlay from 'react-loading-overlay';
 
 class BookingModal extends Component {
 
@@ -25,17 +25,19 @@ class BookingModal extends Component {
             email: '',
             address: '',
             reason: '',
-            birthday: '',
             selectedGender: '',
             doctorId: '',
             timeType: '',
 
-            genders: []
+            genders: [],
+
+            isShowLoading: false
         }
     }
 
     async componentDidMount() {
         this.props.getRenderStart();
+
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -44,9 +46,9 @@ class BookingModal extends Component {
                 this.setState({
                     genders: this.buildDataGender(this.props.genders)
                 })
-
             }
         }
+
 
         if (this.props.genders !== prevProps.genders) {
             if (this.props.genders.length > 0) {
@@ -63,7 +65,7 @@ class BookingModal extends Component {
                 let doctorId = dataTime.doctorID;
                 this.setState({
                     doctorId: doctorId,
-                    timeType: dataTime.timeType
+                    timeType: dataTime.timeType,
                 })
             }
         }
@@ -92,11 +94,6 @@ class BookingModal extends Component {
         })
     }
 
-    handleOnChangeDatePicker = (date) => {
-        this.setState({
-            birthday: date[0],
-        })
-    }
 
     handleChangeSelect = (selectedOption) => {
         this.setState({
@@ -105,7 +102,9 @@ class BookingModal extends Component {
     }
 
     handleConfirmBooking = async () => {
-        let date = moment(this.state.birthday).format(dateFormat.SEND_TO_SERVER);
+        this.setState({
+            isShowLoading: true,
+        })
         let timeString = this.buildTimeBooking(this.props.dataTime);
         let doctorName = this.buildDoctorName(this.props.dataTime);
         let res = await postPatientBookAppointment({
@@ -114,7 +113,7 @@ class BookingModal extends Component {
             email: this.state.email,
             address: this.state.address,
             reason: this.state.reason,
-            date: date,
+            date: this.props.dataTime.date,
             doctorID: this.state.doctorId,
             timeType: this.state.timeType,
             selectedGender: this.state.selectedGender.value,
@@ -124,9 +123,15 @@ class BookingModal extends Component {
         })
 
         if (res && res.errCode === 0) {
+            this.setState({
+                isShowLoading: false
+            })
             toast.success('Booking a new appointment success. Please confirm at your email!')
         }
         else {
+            this.setState({
+                isShowLoading: false
+            })
             toast.error('Booking a new appointment error!')
         }
         this.props.isCloseModal();
@@ -169,6 +174,13 @@ class BookingModal extends Component {
         }
         return (
             <>
+                <LoadingOverlay
+                    active={this.state.isShowLoading}
+                    spinner
+                    text='Sending to your email...'
+                >
+
+                </LoadingOverlay>
                 <Modal
                     isOpen={this.props.isOpenModal}
                     toggle={this.props.isCloseModal}
@@ -194,6 +206,8 @@ class BookingModal extends Component {
                                     doctorId={doctorId}
                                     isShowDescriptionDoctor={false}
                                     dataTime={dataTime}
+                                    isShowLinkDetail={false}
+                                    isShowPrice={true}
                                 />
                             </div>
 
@@ -252,14 +266,10 @@ class BookingModal extends Component {
 
                                 <div className="col-6 form-group">
                                     <label>
-                                        <FormattedMessage id="patient.booking-modal.birthday" />
+                                        <FormattedMessage id="patient.booking-modal.date" />
                                     </label>
 
-                                    <DatePicker
-                                        onChange={this.handleOnChangeDatePicker}
-                                        className="form-control"
-                                        value={this.state.birthday}
-                                    />
+                                    <input type="text" value={dataTime.date} disabled className='form-control' />
 
                                 </div>
 

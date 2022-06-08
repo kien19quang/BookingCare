@@ -3,17 +3,36 @@ import { connect } from 'react-redux';
 import './MedicalFacility.scss'
 import { FormattedMessage } from 'react-intl';
 import Slider from "react-slick";
-
-
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
-
 import "./MedicalFacility.scss"
+import { getAllClinic } from '../../../services/userService';
+import { withRouter } from 'react-router'
 
-import pathImage from '../../../assets/images/Medical Facility/benhvienchoray.jpg'
 
 class MedicalFacility extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataClinics: []
+        }
+    }
+
+    async componentDidMount() {
+        let res = await getAllClinic();
+        if (res && res.errCode === 0) {
+            this.setState({
+                dataClinics: res.data ? res.data : []
+            })
+        }
+    }
+
+    handleViewDetailClinic = (clinic) => {
+        if (this.props.history) {
+            this.props.history.push(`/detail-clinic/${clinic.id}`);
+        }
+    }
 
 
     render() {
@@ -24,7 +43,7 @@ class MedicalFacility extends Component {
             slidesToShow: 4,
             slidesToScroll: 1
         }
-
+        let { dataClinics } = this.state;
         return (
             <div className='section-wrapper section-medical-facility'>
                 <div className="section-container">
@@ -39,38 +58,19 @@ class MedicalFacility extends Component {
 
                     <div className="section-slider">
                         <Slider {...settings}>
-                            <div className='section-block'>
-                                <img src={pathImage} alt="" className='section-img' />
-                                <h3 className='section-img-title'>Bệnh viện Chợ Rẫy</h3>
-                            </div>
-                            <div className='section-block'>
-                                <img src={pathImage} alt="" className='section-img' />
-                                <h3 className='section-img-title'>Bệnh viện Chợ Rẫy</h3>
-                            </div>
-                            <div className='section-block'>
-                                <img src={pathImage} alt="" className='section-img' />
-                                <h3 className='section-img-title'>Bệnh viện Chợ Rẫy</h3>
-                            </div>
-                            <div className='section-block'>
-                                <img src={pathImage} alt="" className='section-img' />
-                                <h3 className='section-img-title'>Bệnh viện Chợ Rẫy</h3>
-                            </div>
-                            <div className='section-block'>
-                                <img src={pathImage} alt="" className='section-img' />
-                                <h3 className='section-img-title'>Bệnh viện Chợ Rẫy</h3>
-                            </div>
-                            <div className='section-block'>
-                                <img src={pathImage} alt="" className='section-img' />
-                                <h3 className='section-img-title'>Bệnh viện Chợ Rẫy</h3>
-                            </div>
-                            <div className='section-block'>
-                                <img src={pathImage} alt="" className='section-img' />
-                                <h3 className='section-img-title'>Bệnh viện Chợ Rẫy</h3>
-                            </div>
-                            <div className='section-block'>
-                                <img src={pathImage} alt="" className='section-img' />
-                                <h3 className='section-img-title'>Bệnh viện Chợ Rẫy</h3>
-                            </div>
+                            {dataClinics && dataClinics.length > 0 &&
+                                dataClinics.map((item, index) => {
+                                    return (
+                                        <div className='section-block'
+                                            key={index}
+                                            onClick={() => this.handleViewDetailClinic(item)}
+                                        >
+                                            <img src={item.image} alt={item.name} className='section-img' />
+                                            <h3 className='section-img-title'>{item.name}</h3>
+                                        </div>
+                                    )
+                                })
+                            }
                         </Slider>
                     </div>
                 </div>
@@ -92,4 +92,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MedicalFacility);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MedicalFacility));
