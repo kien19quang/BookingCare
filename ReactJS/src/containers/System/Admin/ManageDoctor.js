@@ -270,7 +270,6 @@ class ManageDoctor extends Component {
 
     render() {
         let { hasOldData } = this.state;
-        console.log("check state : ", this.state);
         return (
             <>
                 <div className="manage-doctor-container container">
