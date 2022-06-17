@@ -64,33 +64,40 @@ const getDetailSpecialtyById = (inputId, location) => {
                 })
             }
             else {
-                let data = await db.Specialty.findOne({
-                    where: { id: inputId },
-                    attributes: ['contentHTML', 'contentMarkdown']
-                })
-
-                if (data) {
-                    let doctorSpecialty = [];
-                    if (location === 'ALL') {
-                        doctorSpecialty = await db.Doctor_Infor.findAll({
-                            where: { specialtyId: inputId },
-                            attributes: ['doctorId', 'provinceId']
-                        })
-                    }
-                    else {
-                        doctorSpecialty = await db.Doctor_Infor.findAll({
-                            where: {
-                                specialtyId: inputId,
-                                provinceId: location
-                            },
-                            attributes: ['doctorId', 'provinceId']
-                        })
-                    }
-                    data.doctorSpecialty = doctorSpecialty;
+                let data;
+                if (location === 'ALL') {
+                    data = await db.Specialty.findOne({
+                        where: { id: inputId },
+                        attributes: ['contentHTML', 'contentMarkdown'],
+                        include: [
+                            {
+                                model: db.Doctor_Infor,
+                                where: { specialtyId: inputId }
+                            }
+                        ],
+                        raw: false,
+                        nest: true
+                    })
                 }
                 else {
-                    data = {};
+                    data = await db.Specialty.findOne({
+                        where: { id: inputId },
+                        attributes: ['contentHTML', 'contentMarkdown'],
+                        include: [
+                            {
+                                model: db.Doctor_Infor,
+                                where: {
+                                    specialtyId: inputId,
+                                    provinceId: location
+                                }
+                            }
+                        ],
+                        raw: false,
+                        nest: true
+                    })
                 }
+
+
 
                 resolve({
                     errCode: 0,

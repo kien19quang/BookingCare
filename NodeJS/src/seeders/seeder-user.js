@@ -11,8 +11,6 @@ module.exports = {
       gender: 1,
       roleid: "R1",
       phoneNumber: "0847972859",
-      positionId: 'Admin',
-      image: '',
       createdAt: new Date(),
       updatedAt: new Date()
     }]);

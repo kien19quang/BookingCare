@@ -67,22 +67,18 @@ const getDetailClinicById = (inputId, location) => {
             else {
                 let data = await db.Clinic.findOne({
                     where: { id: inputId },
-                    attributes: ['name', 'address', 'contentHTML', 'contentMarkdown']
+                    attributes: ['name', 'address', 'contentHTML', 'contentMarkdown'],
+                    include: [
+                        {
+                            model: db.Doctor_Infor,
+                            where: { clinicId: inputId }
+                        }
+                    ],
+                    raw: false,
+                    nest: true,
                 })
 
-                if (data) {
-                    let doctorClinic = [];
 
-                    doctorClinic = await db.Doctor_Infor.findAll({
-                        where: { clinicId: inputId },
-                        attributes: ['doctorId']
-                    })
-
-                    data.doctorClinic = doctorClinic;
-                }
-                else {
-                    data = {};
-                }
 
                 resolve({
                     errCode: 0,

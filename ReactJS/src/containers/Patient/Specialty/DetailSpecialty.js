@@ -37,7 +37,7 @@ class DetailSpecialty extends Component {
                 let arrDoctorId = [];
 
                 if (data && !_.isEmpty(data)) {
-                    let arr = data.doctorSpecialty;
+                    let arr = data.Doctor_Infors;
                     if (arr && arr.length > 0) {
                         arr.map(item => {
                             arrDoctorId.push(item.doctorId);
@@ -80,22 +80,21 @@ class DetailSpecialty extends Component {
                 id: id,
                 location: location
             })
-
+            console.log(res);
             let resProvince = await getAllCodeService('PROVINCE');
 
-            if (res && res.errCode === 0) {
+            if (res && res.errCode === 0 && resProvince && resProvince.errCode === 0) {
                 let data = res.data;
                 let arrDoctorId = [];
 
                 if (data && !_.isEmpty(data)) {
-                    let arr = data.doctorSpecialty;
+                    let arr = data.Doctor_Infors;
                     if (arr && arr.length > 0) {
                         arr.map(item => {
                             arrDoctorId.push(item.doctorId);
                         })
                     }
                 }
-
                 this.setState({
                     dataDetailSpecialty: res.data,
                     arrDoctorId: arrDoctorId,
